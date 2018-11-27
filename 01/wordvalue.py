@@ -12,16 +12,23 @@ def load_words():
 
     return res
 
-
-def calc_word_value():
+def calc_word_value(word):
     """Calculate the value of the word entered into function
     using imported constant mapping LETTER_SCORES"""
-    pass
+    res = 0
+    for ch in word:
+        if ch.upper() in LETTER_SCORES:
+            res += LETTER_SCORES[ch.upper()]
 
-def max_word_value():
+    return res
+
+def max_word_value(words=None):
     """Calculate the word with the max value, can receive a list
     of words as arg, if none provided uses default DICTIONARY"""
-    pass
+    candidates = load_words() if words == None else words
+    pairs = {c: calc_word_value(c) for c in candidates} 
+    return max(pairs, key=pairs.get)    
+
 
 if __name__ == "__main__":
     pass # run unittests to validate
