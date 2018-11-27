@@ -15,19 +15,12 @@ def load_words():
 def calc_word_value(word):
     """Calculate the value of the word entered into function
     using imported constant mapping LETTER_SCORES"""
-    res = 0
-    for ch in word:
-        if ch.upper() in LETTER_SCORES:
-            res += LETTER_SCORES[ch.upper()]
-
-    return res
+    return sum(LETTER_SCORES.get(ch.upper(), 0) for ch in word)
 
 def max_word_value(words=None):
     """Calculate the word with the max value, can receive a list
     of words as arg, if none provided uses default DICTIONARY"""
-    candidates = load_words() if words == None else words
-    pairs = {c: calc_word_value(c) for c in candidates} 
-    return max(pairs, key=pairs.get)    
+    return max(words or load_words(), key=lambda w: calc_word_value(w))
 
 
 if __name__ == "__main__":
